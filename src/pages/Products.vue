@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <h1>Products</h1>
-    <product-list :posts="posts" v-if="!isLoading"></product-list>
+    <product-list :posts="posts" v-show="!isLoading"></product-list>
 
   </q-page>
 </template>

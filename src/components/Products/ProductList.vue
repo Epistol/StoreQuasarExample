@@ -3,17 +3,20 @@
     <q-card class="my-card" v-for="post in posts" v-bind="{post}" :key="post.id">
       <img :src="post.thumbnailUrl"  :alt="post.title"/>
       <q-list>
-        <q-item clickable>
+        <q-item>
           <q-item-section>
             <q-item-label> {{post.title}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item >
+        <q-item>
           <q-item-section>
-            <q-btn>ADD TO CART</q-btn>
+            <q-btn @click="addToCart(post.id)" :loading="loadingItem">ADD TO CART
+              <template v-slot:loading>
+                <q-spinner-radio />
+              </template>
+            </q-btn>
           </q-item-section>
         </q-item>
-
       </q-list>
     </q-card>
   </div>
@@ -22,10 +25,20 @@
 <script>
 export default {
   name: 'ProductList',
+  data () {
+    return {
+      loadingItem: false
+    }
+  },
   props: {
     posts: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    addToCart (id) {
+      this.$store.commit('cart/addToCart', id)
     }
   }
 }

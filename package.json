@@ -2,7 +2,7 @@
   "name": "storetest",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "Store App",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "Epistol <epistolshow@gmail.com>",
