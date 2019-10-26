@@ -1,57 +1,34 @@
 <template>
   <q-page class="flex flex-center">
     <h1>Products</h1>
-
-    <q-card class="my-card">
-      <img src="https://cdn.quasar.dev/img/parallax2.jpg">
-
-      <q-list>
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="primary" name="local_bar" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>Bar XYZ</q-item-label>
-            <q-item-label caption>Have a drink.</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="red" name="local_gas_station" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>Gas Station</q-item-label>
-            <q-item-label caption>Fill your gas tank.</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="amber" name="local_movies" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>Cinema XYZ</q-item-label>
-            <q-item-label caption>Watch a movie.</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-card>
+    <product-list :posts="posts" v-if="!isLoading"></product-list>
 
   </q-page>
 </template>
 
 <script>
+import ProductList from '../components/Products/ProductList'
+import axios from 'axios'
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  components: { ProductList },
+  data () {
+    return {
+      isLoading: false,
+      posts: [],
+      pageSelected: 1
+    }
+  },
+  created () {
+    this.getProducts(this.pageSelected)
+  },
+  methods: {
+    async getProducts (pageNumber) {
+      this.isLoading = true
+      const { data } = await axios.get('https://jsonplaceholder.typicode.com/albums/1/photos?_page=' + pageNumber + '&_limit=10')
+      this.isLoading = false
+      this.posts = data
+    }
+  }
 }
 </script>
-
-<style lang="sass" scoped>
-  .my-card
-    width: 100%
-    max-width: 250px
-</style>
