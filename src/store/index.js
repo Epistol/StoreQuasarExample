@@ -22,12 +22,5 @@ export default function (/* { ssrContext } */) {
     strict: process.env.DEV
   })
 
-  if (process.env.DEV && module.hot) {
-    module.hot.accept(['./cart'], () => {
-      const newCart = require('./cart').default
-      Store.hotUpdate({ modules: { cart: newCart } })
-    })
-  }
-
   return Store
 }
