@@ -1,13 +1,17 @@
 <template>
-  <q-page class="flex flex-center">
-    <h1>Cart</h1>
-    <template v-if="!cartIds">
-      <p>Your cart is empty</p>
-    </template>
-    <template v-else>
-      <cart-list :posts="cart" v-show="!isLoading"></cart-list>
-    </template>
-  </q-page>
+  <div>
+    <div class="flex flex-center">
+      <h1>Cart</h1>
+    </div>
+    <q-page class="q-mx-auto">
+      <template v-if="!cartIds">
+        <p>Your cart is empty</p>
+      </template>
+      <template v-else>
+        <cart-list :posts="cart" v-show="!isLoading"></cart-list>
+      </template>
+    </q-page>
+  </div>
 </template>
 <script>
 import CartList from '../components/Products/CartList'

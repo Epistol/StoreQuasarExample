@@ -1,8 +1,13 @@
 <template>
-  <q-page class="flex flex-center">
-    <h1>Products</h1>
-    <product-list :posts="posts" v-show="!isLoading"></product-list>
-  </q-page>
+  <div>
+    <div class="flex flex-center">
+      <h1>Products</h1>
+    </div>
+    <q-page class="q-mx-auto">
+      <product-list :posts="posts" v-show="!isLoading"></product-list>
+    </q-page>
+  </div>
+
 </template>
 
 <script>

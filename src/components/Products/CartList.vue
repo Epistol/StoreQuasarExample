@@ -1,25 +1,26 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
     <q-card class="my-card" v-for="cartElement in this.localData" v-bind="{cartElement}" :key="cartElement.id">
-      <img :src="cartElement.thumbnailUrl" :alt="cartElement.title"/>
-      <q-list>
+     <q-list bordered class="rounded-borders">
         <q-item>
-          <q-item-section>
-            <q-item-label>{{getItemQtt(cartElement.id)}}</q-item-label>
+          <q-item-section side>
+            <q-item-label>x {{getItemQtt(cartElement.id)}}</q-item-label>
           </q-item-section>
-        </q-item>
-        <q-item>
+          <q-item-section thumbnail>
+            <img :src="cartElement.thumbnailUrl" :alt="cartElement.title"/>
+          </q-item-section>
           <q-item-section>
             <q-item-label>{{cartElement.title}}</q-item-label>
           </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-btn @click="removeFromCart(cartElement.id)" :loading="loadingItem">Remove
-              <template v-slot:loading>
-                <q-spinner-radio/>
-              </template>
-            </q-btn>
+          <q-item-section center side>
+            <div class="text-grey-8 q-gutter-xs">
+              <q-btn class="gt-xs" size="12px" flat dense icon="delete" @click="removeFromCart(cartElement.id)" :loading="loadingItem">
+                Remove
+                <template v-slot:loading>
+                  <q-spinner-radio/>
+                </template>
+              </q-btn>
+            </div>
           </q-item-section>
         </q-item>
       </q-list>
@@ -82,5 +83,4 @@ export default {
 <style lang="sass" scoped>
   .my-card
     width: 100%
-    max-width: 150px
 </style>
