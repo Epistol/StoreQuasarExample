@@ -35,9 +35,32 @@ export default {
       model: 'one'
     }
   },
+  created () {
+    this.$store.watch(
+      (state, getters) => getters.articlesIds,
+      (newValue, oldValue) => {
+        console.log(`Updating from ${oldValue} to ${newValue}`)
+
+        // Do whatever makes sense now
+        if (newValue) {
+          // eslint-disable-next-line no-undef
+          let total = _.reduce(this.$store.state.cart.articlesIds,
+            function (memoizer, value) {
+              return memoizer + value.quantity
+            }, 0)
+          return 'Cart (' + total + ')'
+        }
+      }
+    )
+  },
   computed: {
     cartLabel () {
-      return 'Cart (' + this.$store.state.cart.articlesIds.length + ')'
+      // eslint-disable-next-line no-undef
+      let total = _.reduce(this.$store.state.cart.articlesIds,
+        function (memoizer, value) {
+          return memoizer + value.quantity
+        }, 0)
+      return 'Cart (' + total + ')'
     }
   }
 }
