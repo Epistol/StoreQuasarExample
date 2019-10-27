@@ -6,20 +6,13 @@
           Shop App
         </q-toolbar-title>
 
-        <div class="nav-right nav-menu">
-          <q-btn to="/products" label="Products" color="purple"/>
+        <div class="nav-item is-tab" :class="{ 'active-bottom-border': $route.path === '/products' }">
+          <q-btn flat class="q-mr-xs" to="/products" label="Products"/>
+        </div>
 
-          <div class="nav-item is-tab" :class="{ 'active-bottom-border': $route.path === '/cart' }">
-            <div class="field is-grouped">
-              <p class="control">
-                <router-link to='/cart' class="button is-info">
-                <span class="icon">
-                  <i class="fa fa-shopping-cart"></i>
-                </span>
-                  <!--                  <span>Checkout ({{itemsInCart}})</span>-->
-                </router-link>
-              </p>
-            </div>
+        <div class="nav-item is-tab" :class="{ 'active-bottom-border': $route.path === '/cart' }">
+          <div class="field is-grouped">
+            <q-btn flat class="q-mr-xs" to="/cart" label="Checkout" icon="fa fa-shopping-cart"/>
           </div>
         </div>
 
@@ -33,8 +26,6 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
-
 export default {
   name: 'MyLayout',
 
@@ -43,13 +34,6 @@ export default {
       leftDrawerOpen: false,
       model: 'one'
     }
-  },
-
-  computed: {
-    /* itemsInCart () {
-        let cart = this.$store.getters.cartProducts
-        return cart.reduce((accum, item) => accum + item.quantity, 0)
-      } */
   }
 }
 </script>

@@ -5,7 +5,12 @@
       <q-list>
         <q-item>
           <q-item-section>
-            <q-item-label> {{post.title}}</q-item-label>
+            <q-item-label>{{post.quantity}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-item-label>{{post.title}}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -23,8 +28,10 @@
 </template>
 
 <script>
+import { AxiosInstance as axios } from 'axios'
+
 export default {
-  name: 'ProductList',
+  name: 'CartList',
   data () {
     return {
       loadingItem: false
@@ -40,8 +47,14 @@ export default {
     this.addToCart(this.pageSelected)
   },
   methods: {
-    addToCart (id) {
-      this.$store.dispatch('cart/addToCart', id)
+    removeFromCart (id) {
+      this.$store.dispatch('cart/removeFromCart', id)
+    },
+    async getProductFromID (id) {
+      this.isLoading = true
+      const { data } = await axios.get('https://jsonplaceholder.typicode.com/albums/' + id)
+      this.isLoading = false
+      return data
     }
   }
 }
