@@ -9,6 +9,7 @@ export function addToCart ({ commit, state }, itemId) {
       commit('addProductToCart', itemId)
     }
   }
+  commit('saveCart')
 }
 
 export function removeFromCart ({ commit, state }, itemId) {
@@ -18,5 +19,6 @@ export function removeFromCart ({ commit, state }, itemId) {
   let product = state.articlesIds.find(function (o) { return o.itemId === itemId })
   if (product) {
     commit('removeProductFromCart', product)
+    commit('saveCart')
   }
 }

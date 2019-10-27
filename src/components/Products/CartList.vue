@@ -1,23 +1,23 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" v-for="post in posts" v-bind="{post}" :key="post.id">
-      <img :src="post.thumbnailUrl"  :alt="post.title"/>
+    <q-card class="my-card" v-for="cartElement in this.localData" v-bind="{cartElement}" :key="cartElement.id">
+      <img :src="cartElement.thumbnailUrl" :alt="cartElement.title"/>
       <q-list>
         <q-item>
           <q-item-section>
-            <q-item-label>{{post.quantity}}</q-item-label>
+            <q-item-label>{{getItemQtt(cartElement.id)}}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{post.title}}</q-item-label>
+            <q-item-label>{{cartElement.title}}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-btn @click="addToCart(post.id)" :loading="loadingItem">ADD TO CART
+            <q-btn @click="removeFromCart(cartElement.id)" :loading="loadingItem">Remove
               <template v-slot:loading>
-                <q-spinner-radio />
+                <q-spinner-radio/>
               </template>
             </q-btn>
           </q-item-section>
@@ -28,13 +28,14 @@
 </template>
 
 <script>
-import { AxiosInstance as axios } from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'CartList',
   data () {
     return {
-      loadingItem: false
+      loadingItem: false,
+      localData: []
     }
   },
   props: {
@@ -44,17 +45,35 @@ export default {
     }
   },
   created () {
-    this.addToCart(this.pageSelected)
+    if (this.posts) {
+      this.localData = this.loadProductsFromCart()
+    }
   },
   methods: {
     removeFromCart (id) {
       this.$store.dispatch('cart/removeFromCart', id)
     },
-    async getProductFromID (id) {
-      this.isLoading = true
-      const { data } = await axios.get('https://jsonplaceholder.typicode.com/albums/' + id)
-      this.isLoading = false
-      return data
+    loadProductsFromCart () {
+      let localData = []
+      this.posts.forEach(function (element) {
+        axios.get('https://jsonplaceholder.typicode.com/photos/' + element.itemId)
+          .then((r) => {
+            element = r.data
+            localData.push(element)
+            console.log(element)
+          })
+      })
+      return localData
+    },
+    getItemQtt (id) {
+      return this.posts.find(function (i) {
+        return i.itemId === id
+      }).quantity
+    }
+  },
+  watch: {
+    posts: function (newData, oldData) {
+      this.localData = this.loadProductsFromCart()
     }
   }
 }

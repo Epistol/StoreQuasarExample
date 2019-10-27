@@ -12,7 +12,7 @@
 
         <div class="nav-item is-tab" :class="{ 'active-bottom-border': $route.path === '/cart' }">
           <div class="field is-grouped">
-            <q-btn flat class="q-mr-xs" to="/cart" label="Checkout" icon="fa fa-shopping-cart"/>
+            <q-btn flat class="q-mr-xs" to="/cart" :label="cartLabel" icon="fa fa-shopping-cart"/>
           </div>
         </div>
 
@@ -33,6 +33,11 @@ export default {
     return {
       leftDrawerOpen: false,
       model: 'one'
+    }
+  },
+  computed: {
+    cartLabel () {
+      return 'Cart (' + this.$store.state.cart.articlesIds.length + ')'
     }
   }
 }
